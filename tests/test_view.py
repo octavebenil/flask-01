@@ -44,3 +44,15 @@ class TestViews(TestCase):
 
         #on test si on a un produit ajouté taille new produit > taille old produit
         self.assertGreater(len(products), old_product_size)
+
+    def test_update_product(self):
+        response = self.client.patch("/api/v1/products/1", json={"name": "Name updated"})
+
+          #on test que le code de retour est 204
+        self.assertEqual(response.status_code, 204)
+
+    def test_update_product_validation_error(self):
+        response = self.client.patch("/api/v1/products/2", json={"name": ""})
+
+          #on test que le code de retour est 422
+        self.assertEqual(response.status_code, 422)     
