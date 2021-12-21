@@ -36,7 +36,6 @@ class TestViews(TestCase):
         old_product_size = len(PRODUCTS)
 
         response = self.client.post("/api/v1/products", json={'name': "France3"})
-
     
         products = response.json
 
