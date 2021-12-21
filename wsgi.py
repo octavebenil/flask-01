@@ -17,8 +17,13 @@ def products():
     return json.jsonify(PRODUCTS)
 
 @app.route("/api/v1/products/<int:id>", methods=["GET"])
-def product(id):
+def readProduct(id):
     if id in PRODUCTS.keys():
         return json.jsonify(PRODUCTS[id]), 200
     else:
         abort(404)
+
+@app.route("/api/v1/products/<int:id>", methods=["DELETE"])
+def deleteProduct(id):
+    PRODUCTS.pop(id, None)
+    return None, 204               
