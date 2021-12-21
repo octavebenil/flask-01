@@ -1,5 +1,9 @@
 from flask import Flask
-from flask import json, abort
+from flask import json, abort, request
+
+#auto incrementation
+import itertools
+
 app = Flask(__name__)
 
 PRODUCTS = {
@@ -26,4 +30,4 @@ def readProduct(id):
 @app.route("/api/v1/products/<int:id>", methods=["DELETE"])
 def deleteProduct(id):
     PRODUCTS.pop(id, None)
-    return None, 204               
+
