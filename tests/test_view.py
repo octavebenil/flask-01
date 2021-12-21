@@ -31,3 +31,17 @@ class TestViews(TestCase):
 
         #on test que le code de retour est 404
         self.assertEqual(resp.status_code, 404) 
+
+    def test_create_product(self):
+        old_product_size = len(PRODUCTS)
+
+        response = self.client.post("/api/v1/products", json={'name': "France3"})
+
+    
+        products = response.json
+
+        #on test que le code de retour est 201
+        self.assertEqual(response.status_code, 201)
+
+        #on test si on a un produit ajouté taille new produit > taille old produit
+        self.assertGreater(len(products), old_product_size)

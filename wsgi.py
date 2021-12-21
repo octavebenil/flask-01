@@ -1,5 +1,9 @@
 from flask import Flask
-from flask import json, abort
+from flask import json, abort, request
+
+#auto incrementation
+import itertools
+
 app = Flask(__name__)
 
 PRODUCTS = {
@@ -26,4 +30,18 @@ def readProduct(id):
 @app.route("/api/v1/products/<int:id>", methods=["DELETE"])
 def deleteProduct(id):
     PRODUCTS.pop(id, None)
-    return None, 204               
+    return None, 204 
+
+@app.route("/api/v1/products", methods=["POST"])
+def createProduct():
+    posted_product = request.get_json()
+
+    print(posted_product)
+
+    START_INDEX = len(PRODUCTS) + 1
+    IDENTIFIER_GENERATOR = itertools.count(START_INDEX)
+
+    new_id = next(IDENTIFIER_GENERATOR)
+    PRODUCTS[new_id] = {'id': new_id, 'name': posted_product["name"]}
+
+    return json.jsonify(PRODUCTS), 201                  
